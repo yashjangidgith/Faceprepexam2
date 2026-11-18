@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            width: 350px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #999;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 18px;
+            background: #292e32;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Create Account</h2>
+
+        <form id="myForm">
+
+            <label>Full name</label>
+            <input type="text" id="name">
+            <div class="error" id="nameError"></div>
+
+            <label>Email</label>
+            <input type="text" id="email">
+            <div class="error" id="emailError"></div>
+
+            <label>Password</label>
+            <input type="password" id="password">
+            <div class="error" id="passwordError"></div>
+
+            <label>Confirm password</label>
+            <input type="password" id="confirm">
+            <div class="error" id="confirmError"></div>
+
+            <button type="submit">Register</button>
+
+            <div id="message"></div>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            // Get values
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+            let confirm = document.getElementById("confirm").value;
+
+            // Clear old errors
+            document.getElementById("nameError").innerHTML = "";
+            document.getElementById("emailError").innerHTML = "";
+            document.getElementById("passwordError").innerHTML = "";
+            document.getElementById("confirmError").innerHTML = "";
+            document.getElementById("message").innerHTML = "";
+
+            let valid = true;
+
+            // Name validation
+            if (name.length < 3) {
+                document.getElementById("nameError").innerHTML =
+                    "Name must be at least 3 characters.";
+                valid = false;
+            }
+
+            // Email validation
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").innerHTML =
+                    "Enter a valid email, e.g. name@example.com";
+                valid = false;
+            }
+
+            // Password validation
+            let digitPattern = /[0-9]/;
+
+            if (password.length < 6 || !digitPattern.test(password)) {
+                document.getElementById("passwordError").innerHTML =
+                    "Use 6+ characters including a number.";
+                valid = false;
+            }
+
+            // Confirm password validation
+            if (password !== confirm) {
+                document.getElementById("confirmError").innerHTML =
+                    "Passwords do not match.";
+                valid = false;
+            }
+
+            // Final result
+            if (valid) {
+                document.getElementById("message").innerHTML =
+                    "Registration successful! Welcome, " + name + ".";
+
+                document.getElementById("message").className = "success";
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
